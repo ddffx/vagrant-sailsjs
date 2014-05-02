@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  config.vm.box = "vagrant init hashicorp/precise64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -119,4 +119,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  config.vm.provision :shell, :path => "bootstrap.sh"
+
+  config.vm.network :forwarded_port, guest: 8080, host: 8888
+  config.vm.network :forwarded_port, guest: 27017, host: 4444
+  config.vm.network :forwarded_port, guest: 80, host: 9999
 end
